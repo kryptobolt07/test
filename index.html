@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invaro SDK - Hero Section</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet"/>
+
+  <style>
+    body { margin: 0; font-family: 'Inter', sans-serif; background-color: #e8e8e3; color: #333; }
+    @keyframes scanline-scroll { 0% { transform: translateY(0); } 100% { transform: translateY(10px); } }
+    .hero-section::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.08) 1px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0) 10px); animation: scanline-scroll 0.4s linear infinite; }
+    @keyframes appear { from { opacity: 0; transform: scale(0.95) rotate(var(--angle, 0deg)); } to { opacity: 1; transform: scale(1) rotate(var(--angle, 0deg)); } }
+    @keyframes disappear { from { opacity: 1; transform: scale(1) rotate(var(--angle, 0deg)); } to { opacity: 0; transform: scale(0.95) rotate(var(--angle, 0deg)); } }
+    .hero-section { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 20px; box-sizing: border-box; overflow: hidden; text-align: center; }
+    .hero-section::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; z-index: 1; pointer-events: none; filter: url(#noiseFilter); animation: noise-animation 0.2s infinite linear alternate-reverse; }
+    @keyframes noise-animation { 0%{transform:translate(0,0)}10%{transform:translate(-5%,-5%)}20%{transform:translate(-10%,5%)}30%{transform:translate(5%,-10%)}40%{transform:translate(-5%,15%)}50%{transform:translate(-10%,5%)}60%{transform:translate(15%,0)}70%{transform:translate(0,10%)}80%{transform:translate(-15%,0)}90%{transform:translate(10%,5%)}100%{transform:translate(5%,0)} }
+    #text-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; }
+    .floating-text { position: absolute; font-family: 'Courier New', Courier, monospace; font-size: 1.1rem; font-weight: 500; user-select: none; color: rgba(59, 79, 83, 0.7); background-color: rgba(232, 232, 227, 0.4); padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(0, 0, 0, 0.02); opacity: 0; }
+    .appearing { animation: appear 0.4s ease-out forwards; }
+    .disappearing { animation: disappear 0.4s ease-in forwards; }
+    .hero-header, .hero-content, .social-proof { position: relative; width: 100%; max-width: 1200px; z-index: 4; }
+    .hero-header { position: absolute; top: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 700; font-size: 1.5rem; }
+    .hero-header nav { display: flex; align-items: center; gap: 20px; }
+    .hero-header nav a { text-decoration: none; color: #555; font-weight: 700; }
+    .btn-header { padding: 8px 16px; border: 2px solid #ccc; border-radius: 8px; }
+    .hero-content h1 { font-size: clamp(3rem, 12vw, 7rem); font-weight: 900; margin: 0; letter-spacing: -0.04em; color: #1a2e31; }
+    .hero-content p { font-size: clamp(1rem, 4vw, 1.25rem); color: #333; margin-top: 10px; margin-bottom: 30px; }
+    .cta-buttons { display: flex; gap: 15px; justify-content: center; }
+    .btn { padding: 15px 30px; font-size: 1rem; font-weight: 700; border-radius: 8px; border: 2px solid #333; cursor: pointer; transition: all 0.2s ease; }
+    .btn-primary { background-color: #333; color: white; }
+    .btn-secondary { background-color: transparent; color: #333; }
+    .social-proof { position: absolute; bottom: 20px; text-align: center; }
+    .social-proof p { font-size: 0.9rem; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+    .logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 20px; align-items: center; filter: grayscale(100%); opacity: 0.6; }
+  </style>
+</head>
+<body>
+
+<svg style="display:none;">
+  <filter id="noiseFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="1" stitchTiles="stitch"/>
+  </filter>
+</svg>
+
+<section class="hero-section">
+  <div id="text-container"></div>
+
+  <header class="hero-header">
+    <div class="logo">Invaro</div>
+    <nav>
+      <a href="#">Docs</a>
+      <a href="#">Login</a>
+      <a href="#" class="btn-header">Get Started</a>
+    </nav>
+  </header>
+
+  <main class="hero-content">
+    <h1>Extract Smarter</h1>
+    <p>AI-powered document processing for financial workflows. Upload. Process. Done.</p>
+    <div class="cta-buttons">
+      <button class="btn btn-primary">Start Processing</button>
+      <button class="btn btn-secondary">Explore API</button>
+    </div>
+  </main>
+
+  <footer class="social-proof">
+    <p>TRUSTED BY MODERN FINTECH & AI PLATFORMS</p>
+    <div class="logos">
+      <span>▲ FinEdge</span>
+      <span>⎎ NeoBank</span>
+      <span>📄 DocuMesh</span>
+      <span>💼 LedgerIQ</span>
+      <span>📊 Statify</span>
+    </div>
+  </footer>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('text-container');
+    const phrases = [
+      "Invalid bank statement format", "Schema mismatch detected", "Job timed out", "Retrying upload...", 
+      "File too large", "Missing invoice number", "Could not detect date field", "Unsupported document type", 
+      "Polling exceeded max attempts", "Field confidence too low", "Job status: failed", "Extraction complete", 
+      "Analyzing page 3...", "Awaiting PDF stream", "Buffer read error", "Unexpected file encoding"
+    ];
+
+    const TARGET_TEXT_COUNT = 35;
+    const LIFESPAN_MIN = 4400;
+    const LIFESPAN_MAX = 2800;
+    const agents = [];
+
+    function random(min, max) { return Math.random() * (max - min) + min; }
+    function getSafePosition() {
+      let position, isSafe, attempts = 0;
+      do {
+        position = { x: random(5, 95), y: random(5, 95) };
+        isSafe = true;
+        for (const agent of agents) {
+          if (!agent || !agent.hasOwnProperty('x')) continue;
+          const dx = agent.x - position.x;
+          const dy = agent.y - position.y;
+          if (Math.sqrt(dx * dx + dy * dy) < (100 / window.innerWidth * 100)) {
+            isSafe = false;
+            break;
+          }
+        }
+        attempts++;
+      } while (!isSafe && attempts < 20);
+      return position;
+    }
+
+    function manageAgentLifecycle(el) {
+      el.classList.remove('appearing', 'disappearing');
+      const safePos = getSafePosition();
+      const angle = random(-15, 15);
+      el.x = safePos.x;
+      el.y = safePos.y;
+      el.style.setProperty('--angle', `${angle}deg`);
+      el.style.top = `${el.y}%`;
+      el.style.left = `${el.x}%`;
+      el.textContent = phrases[Math.floor(random(0, phrases.length))];
+      el.classList.add('appearing');
+      el.addEventListener('animationend', () => el.classList.remove('appearing'), { once: true });
+
+      const lifespan = random(LIFESPAN_MIN, LIFESPAN_MAX);
+      setTimeout(() => {
+        el.classList.add('disappearing');
+        el.addEventListener('animationend', () => manageAgentLifecycle(el), { once: true });
+      }, lifespan);
+    }
+
+    for (let i = 0; i < TARGET_TEXT_COUNT; i++) {
+      const el = document.createElement('div');
+      el.classList.add('floating-text');
+      container.appendChild(el);
+      agents.push(el);
+      const randomStartDelay = random(0, LIFESPAN_MAX);
+      setTimeout(() => manageAgentLifecycle(el), randomStartDelay);
+    }
+  });
+</script>
+
+</body>
+</html>
+
